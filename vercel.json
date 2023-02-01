@@ -1,29 +1,15 @@
+vercel.json or now.json
+
 {
-  "headers": [
+  "version": 2,
+  "public": true,
+  "builds": [
     {
-      "source": "/service-worker.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        }
-      ]
+      "src": "package.json",
+      "use": "@vercel/next",
+      "config": {
+        "installCommand": "yarn set version berry && yarn plugin import workspace-tools && yarn config set nodeLinker node-modules && yarn install"
+      }
     }
-  ],
-  "redirects": [
-    { "source": "/migrate/v2", "destination": "/migrate", "permanent": true }
   ]
 }
